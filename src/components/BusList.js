@@ -1,6 +1,12 @@
 import { Button } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
-export const BusList = () => {
+
+export const BusList = ({userDetails}) => {
+//    const user = useContext(BookTicketContext)
+const {state} = useLocation();
+const { source,destination,date,noOfSeats } = state; 
+console.log("------------------------",source,destination,date,noOfSeats)
     return (
         <div className="container">
             <br />

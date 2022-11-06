@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {Form, Button} from 'react-bootstrap';
 import bgImg from '../images/bg1.jpeg';
 import './style.css';
-import {signupService} from '../services/userService';
+import {SignupService} from '../services/userService';
 
 export const Signup = () =>{
 
@@ -41,7 +41,7 @@ export const Signup = () =>{
         // call server api for sending data using 'axios'
         // react-tosify = for display message
 
-        signupService(data).then((resp)=>{
+        SignupService(data).then((resp)=>{
             console.log(resp);
             console.log('user registered');
         }).catch((error)=>{

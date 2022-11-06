@@ -3,7 +3,7 @@ import {Form, Button} from 'react-bootstrap';
 import bgImg from '../images/bg1.jpeg';
 import './style.css';
 import { useEffect, useState } from 'react';
-import { loginService } from '../services/userService';
+import { LoginService } from '../services/userService';
 
 export const Login = () =>{
     const [user,setUser] = useState({
@@ -17,7 +17,7 @@ export const Login = () =>{
             emailId: event.target.email.value,
             password:  event.target.password.value
         })
-        loginService(user).then((response)=>{console.log("----------------response---------",response.data)})
+        LoginService(user).then((response)=>{console.log("----------------response---------",response)})
        
     }
 
