@@ -1,12 +1,65 @@
+import { useState,useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
-export const BusList = ({userDetails}) => {
-//    const user = useContext(BookTicketContext)
-const {state} = useLocation();
-const { source,destination,date,noOfSeats } = state; 
-console.log("------------------------",source,destination,date,noOfSeats)
+export const BusList = () => {
+    const [data,setData]=useState([])
+    const { state } = useLocation();
+    const { busData } = state;
+    const navigate = useNavigate();
+
+
+    const fetchData = () => {
+        return fetch("http://127.0.0.1:8000/Bus/searchBus"
+        , {
+            method: 'POST', // or 'PUT'
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(busData),
+          })
+              .then((response) => response.json())
+              .then((respData) => setData(respData));
+      }
+    
+
+      useEffect(() => {
+        fetchData();
+        
+      },[])
+
+      const bookNow=(busid,busticket)=>{
+        navigate("/finalBooking",{
+            state:{
+                busId:busid,
+                busTicket:busticket    
+            }
+        })
+      }
+
+
+      const DisplayData=data.map(
+        (info)=>{
+            return(
+                <tr>
+                    <td>{info.busId}</td>
+                    <td>{info.busNumber}</td>
+                    <td>{info.startDestination}</td>
+                    <td>{info.endDestination}</td>
+                    <td>{info.startTime}</td>
+                    <td>{info.departureDate}</td>
+                    <td>{info.ticketPrice}</td>
+                    <td>{info.availableSeats}</td>
+                    <td>{info.totalSeats}</td>
+                    <td>{info.contactNumber}</td>
+                    <td><Button onClick={()=>bookNow(info.busId,info.ticketPrice)} variant="success">Book Now</Button></td> 
+                </tr>
+            )
+        }
+    )
+
+
     return (
         <div className="container">
             <br />
@@ -27,26 +80,15 @@ console.log("------------------------",source,destination,date,noOfSeats)
                         <th scope="col">Total seats</th>
                         <th scope="col">Contact Number</th>
                         <th scope="col"></th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>6787</td>
-                        <td>Delhi</td>
-                        <td>Agra</td>
-                        <td>6:47</td>
-                        <td>14-Nov-2022</td>
-                        <td>500</td>
-                        <td>10</td>
-                        <td>30</td>
-                        <td>9876543210</td>
-                        <td><Button type="submit" variant="success"><a href="finalBooking" style={{color:"white",textDecoration:"none"}}>Book Now</a></Button></td>
-                    </tr>
-
-
+                    {DisplayData}
                 </tbody>
             </table>
         </div>
+       
+        
     )
 }

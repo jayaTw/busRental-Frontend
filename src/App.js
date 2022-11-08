@@ -18,7 +18,6 @@ function App() {
 
     <BrowserRouter>
       <Navbar />
-      {/* <BookTicketProvider> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -34,7 +33,6 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         
       </Routes>
-      {/* </BookTicketProvider> */}
     </BrowserRouter>
 
 
